@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><title>쑥쑥이 복약 도우미</title><link rel="stylesheet" href="style.css"></head><body>
+<div class="toast" id="toast" role="status"></div>
+<div id="app">
+
+<section id="s1" class="on">
+ <p class="hello" id="hello"></p><p class="note" id="remind" hidden></p>
+ <div class="home">
+  <button class="menu" data-go="2" style="grid-area:a"><span>💊</span><b>약물 등록</b></button>
+  <button class="menu" data-go="3" style="grid-area:b"><span>🏥</span><b>병원 등록</b></button>
+  <button class="hero" id="homePlant" data-go="11" style="grid-area:p" aria-label="내 식물 보기"></button>
+  <button class="menu" data-go="4" style="grid-area:c"><span>📅</span><b>다음 진료 일정</b></button>
+  <button class="menu" data-go="5" style="grid-area:d"><span>👨‍👩‍👧</span><b>보호자·의료진 연계</b></button>
+ </div>
+ <button class="menu wide" data-go="12"><span>🗂️</span><b>나의 등록된 약물 보기</b></button>
+ <button class="fab" data-go="6" aria-label="쑥쑥이 챗봇"><span>🪴</span>쑥쑥이</button>
+</section>
+
+<section id="s2">
+ <header><button class="back" data-go="1" aria-label="뒤로">←</button><h1>약물 정보 등록</h1></header>
+ <label class="photo"><input type="file" id="pic" accept="image/*" capture="environment" hidden><span id="photoTxt"></span></label>
+ <button class="ghost" id="rx">🧾 처방전 촬영으로 자동 입력</button><input type="file" id="rxf" accept="image/*" capture="environment" hidden>
+ <h3>약물명</h3><input id="mname" placeholder="약 이름을 입력해주세요">
+ <h3>1회 복용량</h3><div class="chips" data-k="dose"><button>0.5정</button><button class="sel">1정</button><button>2정</button></div>
+ <h3>하루 복용 횟수</h3><div class="chips" data-k="freq"><button class="sel">1회</button><button>2회</button><button>3회</button><button>기타</button></div>
+ <h3>복용 시간 (여러 개 선택 가능)</h3><div class="chips multi" data-k="when"><button class="sel">아침</button><button>점심</button><button>저녁</button><button>취침 전</button></div>
+ <input id="mtime" class="tm" data-t="time" placeholder="원하는 시간 입력" style="margin-top:10px">
+ <button class="cta" id="saveMed" style="margin-top:22px">등록하기</button><p class="small">입력한 정보가 맞는지 확인해주세요.</p>
+</section>
+
+<section id="s3">
+ <header><button class="back" data-go="1" aria-label="뒤로">←</button><h1>병원 등록</h1></header>
+ <input id="q" placeholder="🔍 다니는 병원을 검색해주세요"><div id="hres"></div>
+ <button class="cta fixed" id="regH">이 병원 등록하기</button>
+</section>
+
+<section id="s4">
+ <header><button class="back" data-go="1" aria-label="뒤로">←</button><h1>다음 외래 일정</h1></header>
+ <div class="mon"><button id="apm" aria-label="이전 달">‹</button><b id="amon"></b><button id="anm" aria-label="다음 달">›</button></div>
+ <div class="cal" id="acal"></div>
+ <h3>가장 가까운 진료 일정</h3><div id="near"></div><div id="rest"></div>
+ <button class="cta fixed" id="addA">진료 일정 추가하기</button>
+</section>
+
+<section id="s5">
+ <header><button class="back" data-go="1" aria-label="뒤로">←</button><h1>보호자 연계 & 의료진 연계</h1></header>
+ <div class="half g"><div class="hd"><h2>등록된 보호자</h2><button class="addg" id="addG"><span>👨‍👩‍👧</span>보호자 추가하기</button></div><div class="two" id="gl"></div></div>
+ <div class="half h"><div class="hd"><h2>등록된 병원</h2></div><div class="two" id="hl"></div></div>
+</section>
+
+<section id="s6" class="chatbg">
+ <header><button class="back" data-go="1" aria-label="뒤로">←</button><h1>쑥쑥이</h1></header>
+ <div class="chat" id="c6"></div>
+ <button class="cta fixed" data-go="7">🔔 복약 알림 눌러보기 (시연)</button>
+</section>
+
+<section id="s7" class="chatbg">
+ <header><button class="back" data-go="1" aria-label="뒤로">←</button><h1>쑥쑥이</h1></header>
+ <div class="chat" id="c7"></div>
+</section>
+
+<section id="s8" class="chatbg">
+ <header><button class="back" data-go="1" aria-label="뒤로">←</button><h1>쑥쑥이</h1></header>
+ <div class="bot"><span class="av">🪴</span><div class="b">약을 복용하신지 30분이 지났습니다. 불편하신 점이 있으신가요?</div></div>
+ <div class="sym">
+  <button data-sy="어지러움"><span>😵‍💫</span>어지러움</button><button data-sy="졸림"><span>😴</span>졸림</button>
+  <button data-sy="두통"><span>🤕</span>두통</button><button data-sy="속쓰림"><span>🔥</span>속쓰림</button>
+  <button data-sy="메스꺼움"><span>🤢</span>메스꺼움</button><button data-sy="발진·가려움"><span>🔴</span>발진·가려움</button>
+  <button data-sy="호흡곤란"><span>😮‍💨</span>호흡곤란</button><button data-sy="심한 복통"><span>😖</span>심한 복통</button>
+  <button data-sy="없음" class="none"><span>🙂</span>없음</button>
+ </div>
+ <h3>다른 증상이 있으면 적어주세요</h3><input id="own" placeholder="직접 적기"><button class="cta" id="ownOk" style="margin-top:12px">확인</button>
+</section>
+
+<section id="s12">
+ <header><button class="back" data-go="1" aria-label="뒤로">←</button><h1>나의 등록된 약물</h1></header>
+ <div id="ml"></div>
+</section>
+
+<section id="s13">
+ <header><button class="back" data-go="12" aria-label="뒤로">←</button><h1>약물 자세히 보기</h1></header>
+ <div id="md"></div>
+</section>
+
+<section id="s11" class="tab">
+ <h1 style="margin-bottom:14px">복약 기록</h1>
+ <div class="bw"><div class="bp" id="bp"></div><div class="bubble" id="bb"></div></div>
+ <p class="small" id="bs"></p>
+ <div class="mon"><button id="pm" aria-label="이전 달">‹</button><b id="mon"></b><button id="nm" aria-label="다음 달">›</button></div>
+ <div class="cal" id="cal"></div><p class="small">날짜를 누르면 약을 먹었는지 기록할 수 있어요.</p>
+ <hr><h3>이번달 복약 달성률</h3><div class="ach" id="ach"></div>
+</section>
+
+<section id="s10" class="tab"><div id="g10"></div></section>
+
+<section id="s9" class="tab">
+ <div id="sc9"><h1>약을 드신 지 30분 지났어요. 지금 몸 상태는 어떠세요?</h1><p class="small">불편한 정도에 맞는 얼굴을 눌러 주세요</p>
+  <div class="sel9" id="sel9"></div><div class="scale" id="scale"></div>
+  <div class="ends"><span>0 불편 없음</span><span>10 매우 심함</span></div>
+  <button class="cta" id="scOk" style="margin-top:26px">선택 완료</button></div>
+ <div id="dn9" hidden><p class="thanks">답해 주셔서 감사합니다. 오늘 상태가 잘 기록되었어요.</p><button class="cta" data-go="1">처음으로</button></div>
+</section>
+
+<nav id="tabs" hidden>
+ <button data-go="11"><span>📋</span>복약 기록</button><button data-go="10"><span>🌱</span>내 식물</button><button data-go="9"><span>🙂</span>몸 상태</button>
+</nav>
+</div>
+
+<aside id="admin"><h3>시연용 관리자 패널</h3><p id="ad1"></p>
+ <div class="row"><button id="plus">시연 날짜 +1일</button><button id="rst">처음 상태로 초기화</button></div>
+ <p id="ad2"></p><div id="ad3"></div></aside>
+
+<dialog id="dDay"><h3 id="dDayT"></h3><button class="cta" id="dYes">예, 먹었어요</button><button class="cta no" id="dNo">아니요, 안 먹었어요</button><button class="ghost" id="dClose">닫기</button></dialog>
+<dialog id="dGrow"><p class="gt">🎉 7일 복약 달성!</p><div class="gp" id="gp"></div><p class="gm" id="gm"></p><button class="cta" id="gok">확인</button></dialog>
+<dialog id="dAppt"><h3>진료 일정</h3><input id="dh" placeholder="병원 이름"><input id="dd" class="tm" data-t="date" placeholder="진료 날짜"><input id="dt" class="tm" data-t="time" placeholder="진료 시간"><input id="dp" placeholder="진료과 (예: 내과)">
+ <button class="cta" id="dsave" style="margin-top:14px">저장하기</button><button class="ghost" id="dno">닫기</button></dialog>
+<dialog id="dGuard"><h3>보호자 추가</h3><input id="gr" placeholder="환자와의 관계 (예: 아들)"><input id="gn" placeholder="보호자 이름"><input id="gt" type="tel" placeholder="전화번호">
+ <div class="btns"><button class="cta no" id="gcancel">취소</button><button class="cta" id="gsave">등록</button></div></dialog>
+<script src="script.js"></script>
+</body></html>
